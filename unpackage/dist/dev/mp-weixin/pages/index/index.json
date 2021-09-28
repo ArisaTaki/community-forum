@@ -1,6 +1,5 @@
 {
-  "navigationBarTitleText": "uni-app",
-  "usingComponents": {
-    "u-button": "/node-modules/uview-ui/components/u-button/u-button"
-  }
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {}
 }
