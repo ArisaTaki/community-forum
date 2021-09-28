@@ -1,6 +1,8 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/feeds/feeds",
+    "pages/me/me"
   ],
   "subPackages": [],
   "window": {
