@@ -11116,6 +11116,89 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
   sticky: 970,
   indexListSticky: 965 };exports.default = _default;
 
+/***/ }),
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */
+/*!*********************************************************************************************!*\
+  !*** /Users/cxlamano/Documents/HBuilderProjects/community-forum/common/http.interceptor.js ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var install = function install(Vue, vm) {
+  Vue.prototype.$u.http.setConfig({
+    baseUrl: 'http://ts.lagou.uieee.com/api/v2',
+    loadingText: 'loading————',
+    loadingTime: 800 });
+
+
+  Vue.prototype.$u.http.interceptor.request = function (config) {
+    config.header.Token = 'xxxx';
+
+    return config;
+  };
+
+  Vue.prototype.$u.http.interceptor.response = function (res) {
+    return res;
+  };
+};var _default =
+
+{
+  install: install };exports.default = _default;
+
+/***/ }),
+/* 70 */
+/*!*************************************************************************************!*\
+  !*** /Users/cxlamano/Documents/HBuilderProjects/community-forum/common/http.api.js ***!
+  \*************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var install = function install(Vue, vm) {
+  var api = {};
+  // 获取广告轮播图数据信息
+  api.getAdverts = function (params) {return vm.$u.get('/advertisingspace/advertising?space=1,2,3');};
+
+  // 获取动态列表信息
+  api.getFeeds = function (params) {return vm.$u.get('/feeds', params);};
+
+  // 获取资讯列表信息
+  api.getNews = function (params) {return vm.$u.get('/news', params);};
+  vm.$u.api = api;
+};var _default =
+
+{
+  install: install };exports.default = _default;
+
 /***/ })
 ]]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

@@ -5,11 +5,20 @@ import Vue from 'vue'
 
 import uView from 'uview-ui'
 Vue.use(uView)
+
+Vue.prototype.BaseFileURL = 'http://ts.lagou.uieee.com/api/v2/files/'
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
     ...App
 })
+
+import httpInterceptor from '@/common/http.interceptor.js'
+Vue.use(httpInterceptor, app)
+
+import httpApi from '@/common/http.api.js'
+Vue.use(httpApi, app)
 app.$mount()
 // #endif
 

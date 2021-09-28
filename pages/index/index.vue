@@ -2,12 +2,9 @@
 	<view class="index">
 		<view class="header-box">
 			<swiper class="swiper" :indicator-dots="false" :autoplay="true" :interval="2500" :duration="500">
-				<swiper-item>
-					<navigator open-type="navigate" :url="`/pages/webview/webview?url=${encodeURI('https://www.baidu.com')}`">
-						<image
-							class="banner-swiper-img"
-							src="https://ns-strategy.cdn.bcebos.com/ns-strategy/upload/fc_big_pic/part-00140-2668.jpg"
-							mode="aspectFill" />
+				<swiper-item v-for="(item, index) in swiperList" :key="index">
+					<navigator open-type="navigate" :url="`/pages/webview/webview?url=${encodeURI(item.data.link)}`">
+						<image class="banner-swiper-img" :src="item.data.image" mode="aspectFill" />
 					</navigator>
 				</swiper-item>
 			</swiper>
@@ -19,7 +16,7 @@
 						<view class="title">
 							精彩动态
 						</view>
-					</view> 
+					</view>
 				</view>
 				<view class="card-one card-right" @tap="gotoTab('/pages/me/me')">
 					<image class="img" src="/static/ran.png" mode="aspectFill" />
@@ -31,14 +28,46 @@
 				</view>
 			</view>
 			<view class="tabs-box">
-				<view class="one-nav nav-actived">
+				<view class="one-nav" :class="curretSwiperIndex === 0 ? 'nav-actived': ''" @tap="swiperChange(0)">
 					推荐
 				</view>
-				<view class="one-nav">
+				<view class="one-nav" :class="curretSwiperIndex === 1 ? 'nav-actived': ''" @tap="swiperChange(1)">
 					资讯
 				</view>
 			</view>
 		</view>
+		<swiper class="swiper-box" style="height: 1000upx;" :current="curretSwiperIndex"
+	    @animationfinish="swiperChange(!curretSwiperIndex === 0 ?  1 : 0)">
+			<swiper-item class="swiper-item sns-now">
+				<view class="feeds-box">
+					<view class="feed-one" v-for="(item, index) in feedsList" :key="index">
+						<navigator open-type="navigate">
+							<image :src="item.cover" mode="widthFix" :lazy-load="true" class="feed-img" />
+							<view class="u-line-2 feed-title" v-if="!!item.feed_content">
+								{{item.feed_content}}
+							</view>
+							<view class="feed-info">
+								<view class="ilike">
+									<image class="avatar" :src="item.avatar" />
+									<text class="name u-line-1">{{ item.name }}</text>
+									<view class="iview">
+										<view class="ilike">
+											<image v-if="item.has_like" src="@/static/lover.png" class="micon" />
+											<image v-else src="@/static/love.png" class="micon" />
+											<text class="love-count" v-if="item.like_count > 0">
+												{{item.like_count}}</text>
+										</view>
+									</view>
+								</view>
+							</view>
+						</navigator>
+					</view>
+				</view>
+			</swiper-item>
+			<swiper-item class="swiper-item sns-news">
+				<view class="swiper-item">2</view>
+			</swiper-item>
+		</swiper>
 	</view>
 </template>
 
@@ -46,17 +75,62 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				// 轮播图广告列表信息
+				swiperList: [],
+				// 当前推荐资讯的滑动位置
+				curretSwiperIndex: 0,
+				// 当前推荐资讯的高亮显示
+				curretSwiperIndexStyle: 'nav-actived',
+				// 动态列表数据
+				feedsList: [],
+				// 资讯列表数据
+				newsList: []
 			}
 		},
 		onLoad() {
-
+			// 初始化获取广告信息
+			this.getAds()
+			// 初始化获取动态信息
+			this.getFeeds()
+			// 初始化获取资讯信息
+			this.getNews()
 		},
 		methods: {
+			// Tab链接跳转
 			gotoTab(url) {
 				uni.switchTab({
 					url
 				})
+			},
+			// 获取广告信息
+			async getAds() {
+				this.swiperList = await this.$u.api.getAdverts()
+			},
+			// 获取动态信息
+			async getFeeds() {
+				let feeds = await this.$u.api.getFeeds()
+				this.feedsList = feeds.feeds.map((item) => {
+					return {
+						...item,
+						cover: this.BaseFileURL + item.images[0].file,
+						avatar: !!item.user.avatar ? item.user.avatar.url : '/staic/nopic.png',
+						name: item.user.name
+					}
+				})
+			},
+			// 获取资讯信息
+			async getNews() {
+				let news = await this.$u.api.getNews()
+				this.newsList = news.map((item) => {
+					return {
+						...item,
+						cover: this.BaseFileURL + item.image.id
+					}
+				})
+			},
+			// 推荐，资讯切换方法
+			swiperChange(index) {
+				this.curretSwiperIndex = index
 			}
 		}
 	}
