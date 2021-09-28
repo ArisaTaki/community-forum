@@ -1,0 +1,23 @@
+{
+  "name": "community-forum",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/ArisaTaki/community-forum.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArisaTaki/community-forum/issues"
+  },
+  "homepage": "https://github.com/ArisaTaki/community-forum#readme",
+  "dependencies": {
+    "uview-ui": "^1.8.4"
+  }
+}
