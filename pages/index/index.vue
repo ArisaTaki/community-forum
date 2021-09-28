@@ -1,6 +1,6 @@
 <template>
 	<view class="content">
-		首页
+		<u-button>按钮</u-button>
 	</view>
 </template>
 
@@ -14,7 +14,7 @@
 		onLoad() {
 
 		},
-		methods: {
+		methods: { 
 
 		}
 	}

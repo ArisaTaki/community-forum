@@ -52,9 +52,6 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"easycom": {
-		// 下载安装的方式需要"@/"，npm安装的不需要
-		// "^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
-		// npm安装方式
-		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue"
 	}
 }

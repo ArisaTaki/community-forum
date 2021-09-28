@@ -1,1 +1,1 @@
-<view class="content">首页</view>
+<view class="content"><u-button vue-id="8dd740cc-1" bind:__l="__l" vue-slots="{{['default']}}">按钮</u-button></view>
