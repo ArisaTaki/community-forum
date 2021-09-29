@@ -36,8 +36,7 @@
 				</view>
 			</view>
 		</view>
-		<swiper class="swiper-box" style="height: 1000upx;" :current="curretSwiperIndex"
-	    @animationfinish="swiperChange(!curretSwiperIndex === 0 ?  1 : 0)">
+		<swiper class="swiper-box" style="height: 1000upx;" :current="curretSwiperIndex" @animationfinish="console">
 			<swiper-item class="swiper-item sns-now">
 				<view class="feeds-box">
 					<view class="feed-one" v-for="(item, index) in feedsList" :key="index">
@@ -65,13 +64,33 @@
 				</view>
 			</swiper-item>
 			<swiper-item class="swiper-item sns-news">
-				<view class="swiper-item">2</view>
+				<view v-for="(item, index) in newsList" :key="index">
+					<navigator :url="`/subpages/newinfo/newinfo?id=${item.id}`" open-type="navigate" class="one-new">
+						<view class="left">
+							<view class="title u-line-2">
+								{{item.title}}
+							</view>
+							<view class="uinfo">
+								<view class="iview">
+									<view class="utime">
+										<text class="name">{{item.author}}</text>
+									</view>
+								</view>
+								<text class="uptime">{{item.created_at | timeFormate}}发布</text>
+							</view>
+						</view>
+						<view class="right">
+							<image :src="item.cover" mode="aspectFill" class="pic" />
+						</view>
+					</navigator>
+				</view>
 			</swiper-item>
 		</swiper>
 	</view>
 </template>
 
 <script>
+	import timeFrom from '@/tools/timeFrom.js'
 	export default {
 		data() {
 			return {
@@ -80,7 +99,7 @@
 				// 当前推荐资讯的滑动位置
 				curretSwiperIndex: 0,
 				// 当前推荐资讯的高亮显示
-				curretSwiperIndexStyle: 'nav-actived',
+				curretSwiperIndexStyle: '',
 				// 动态列表数据
 				feedsList: [],
 				// 资讯列表数据
@@ -96,6 +115,10 @@
 			this.getNews()
 		},
 		methods: {
+			
+			console() {
+				console.log(this.curretSwiperIndex)
+			},
 			// Tab链接跳转
 			gotoTab(url) {
 				uni.switchTab({
@@ -113,7 +136,7 @@
 					return {
 						...item,
 						cover: this.BaseFileURL + item.images[0].file,
-						avatar: !!item.user.avatar ? item.user.avatar.url : '/staic/nopic.png',
+						avatar: !!item.user.avatar ? item.user.avatar.url : '/static/nopic.png',
 						name: item.user.name
 					}
 				})
@@ -132,7 +155,15 @@
 			swiperChange(index) {
 				this.curretSwiperIndex = index
 			}
-		}
+		},
+		filters: {
+			timeFormate(timeDate) {
+				let Time = new Date(timeDate);
+				let timestemp = Time.getTime();
+				let t = timeFrom(timestemp, "yyyy年mm月dd日");
+				return t;
+			}
+		},
 	}
 </script>
 <style lang="scss" scoped>
