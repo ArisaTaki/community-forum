@@ -4,6 +4,6 @@
   "usingComponents": {
     "index-sns-waterfall-left": "/pages/index/index-sns-waterfall-left",
     "index-sns-waterfall-right": "/pages/index/index-sns-waterfall-right",
-    "sns-waterfall": "/components/sns-waterfall"
+    "sns-waterfall": "/components/sns-waterfall/sns-waterfall"
   }
 }

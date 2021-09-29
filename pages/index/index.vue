@@ -1,5 +1,17 @@
 <template>
 	<view class="index">
+
+		<!-- 顶部导航 -->
+		<uni-nav-bar v-if="navBarShowTag">
+			<view class="tabs-box">
+				<view class="one-nav" :class="curretSwiperIndex === 0? 'nav-actived' : ''" @tap="swiperChange(0)">
+					推荐
+				</view>
+				<view class="one-nav" :class="curretSwiperIndex === 1? 'nav-actived' : ''" @tap="swiperChange(1)">
+					资讯
+				</view>
+			</view>
+		</uni-nav-bar>
 		<view class="header-box">
 			<swiper class="swiper" :indicator-dots="false" :autoplay="true" :interval="2500" :duration="500">
 				<swiper-item v-for="(item, index) in swiperList" :key="index">
@@ -36,7 +48,8 @@
 				</view>
 			</view>
 		</view>
-		<swiper class="swiper-box" :style="'height:' + swiperSliderHeight" :current="curretSwiperIndex" @animationfinish="swiperSlider">
+		<swiper class="swiper-box" :style="'height:' + swiperSliderHeight" :current="curretSwiperIndex"
+			@animationfinish="swiperSlider">
 			<swiper-item class="swiper-item sns-now">
 				<view class="feeds-box">
 					<sns-waterfall v-model="feedsList" ref="waterfall">
@@ -53,7 +66,8 @@
 											<text class="name u-line-1">{{ item.name }}</text>
 											<view class="iview">
 												<view class="ilike">
-													<image v-if="item.has_like" src="@/static/lover.png" class="micon" />
+													<image v-if="item.has_like" src="@/static/lover.png"
+														class="micon" />
 													<image v-else src="@/static/love.png" class="micon" />
 													<text class="love-count" v-if="item.like_count > 0">
 														{{item.like_count}}</text>
@@ -77,7 +91,8 @@
 											<text class="name u-line-1">{{ item.name }}</text>
 											<view class="iview">
 												<view class="ilike">
-													<image v-if="item.has_like" src="@/static/lover.png" class="micon" />
+													<image v-if="item.has_like" src="@/static/lover.png"
+														class="micon" />
 													<image v-else src="@/static/love.png" class="micon" />
 													<text class="love-count" v-if="item.like_count > 0">
 														{{item.like_count}}</text>
@@ -119,7 +134,7 @@
 
 <script>
 	import timeFrom from '@/tools/timeFrom.js'
-	import snsWaterfall from '@/components/sns-waterfall.vue'
+	import snsWaterfall from '@/components/sns-waterfall/sns-waterfall.vue'
 	export default {
 		data() {
 			return {
@@ -138,10 +153,16 @@
 				// 滑动页面轮播器的高度
 				swiperSliderFeedsHeight: '0px',
 				// 资讯轮播图高度
-				swiperSliderNewsHeight: '0px'
+				swiperSliderNewsHeight: '0px',
+				// NavBar 显示状态控制
+				navBarShowTag: false,
+				// 记录推荐滚动所处位置
+				oldFeedsScrollTop: 0,
+				// 记录资讯滚动所处位置
+				oldNewsScrollTop: 0
 			}
 		},
-		
+
 		components: {
 			snsWaterfall
 		},
@@ -153,14 +174,33 @@
 			// 初始化获取资讯信息
 			this.getNews()
 		},
+		onPageScroll(event) {
+			if (this.curretSwiperIndex === 0) {
+				this.oldFeedsScrollTop = event.scrollTop
+			} else {
+				this.oldNewsScrollTop = event.scrollTop
+			}
+			if (event.scrollTop > 220) {
+				this.navBarShowTag = true
+			} else {
+				this.navBarShowTag = false
+			}
+		},
 		methods: {
 			// 推荐、资讯、滑动切换方法
 			swiperSlider(event) {
 				let index = event.detail.current
-				if(index === 0) {
+				if (index === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
+					uni.pageScrollTo({
+						duration:0,
+						scrollTop:this.oldFeedsScrollTop
+					})
 				} else {
-					this.swiperSliderHeight = this.swiperSliderNewsHeight
+					uni.pageScrollTo({
+						duration:0,
+						scrollTop:this.oldNewsScrollTop
+					})
 				}
 				this.curretSwiperIndex = index
 			},
@@ -189,7 +229,7 @@
 					this.swiperSliderFeedsHeight = height
 				})
 			},
-			// 获取资讯信息
+			// 获取资讯信息 
 			async getNews() {
 				let news = await this.$u.api.getNews()
 				this.newsList = news.map((item) => {
@@ -204,7 +244,15 @@
 			swiperChange(index) {
 				if (index === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
+					uni.pageScrollTo({
+						duration:0,
+						scrollTop:this.oldFeedsScrollTop
+					})
 				} else {
+					uni.pageScrollTo({
+						duration:0,
+						scrollTop:this.oldNewsScrollTop
+					})
 					this.swiperSliderHeight = this.swiperSliderNewsHeight
 				}
 				this.curretSwiperIndex = index

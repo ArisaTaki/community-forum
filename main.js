@@ -8,6 +8,10 @@ Vue.use(uView)
 
 Vue.prototype.BaseFileURL = 'http://ts.lagou.uieee.com/api/v2/files/'
 
+// 引入公用组件uni-nav-bar
+import uniNavBar from '@/components/uni-nav-bar/index.vue'
+Vue.component('uni-nav-bar', uniNavBar)
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 const app = new Vue({
