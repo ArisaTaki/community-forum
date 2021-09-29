@@ -186,21 +186,41 @@
 				this.navBarShowTag = false
 			}
 		},
+		onPullDownRefresh() {
+			this.getAds()
+			if (this.curretSwiperIndex === 0) {
+				this.$refs.waterfall.clear()
+				this.getFeeds()
+			} else {
+				this.getNews()
+			}
+		},
+		// 下拉至底部请求新的数据
+		onReachBottom() {
+			if (this.curretSwiperIndex === 0) {
+				this.getFeeds()
+			}
+		},
 		methods: {
 			// 推荐、资讯、滑动切换方法
 			swiperSlider(event) {
 				let index = event.detail.current
 				if (index === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
-					uni.pageScrollTo({
-						duration:0,
-						scrollTop:this.oldFeedsScrollTop
-					})
+					setTimeout(() => {
+						uni.pageScrollTo({
+							duration:0,
+							scrollTop:this.oldFeedsScrollTop
+						})
+					},50)
 				} else {
-					uni.pageScrollTo({
-						duration:0,
-						scrollTop:this.oldNewsScrollTop
-					})
+					this.swiperSliderHeight = this.swiperSliderNewsHeight
+					setTimeout(() => {
+						uni.pageScrollTo({
+							duration:0,
+							scrollTop:this.oldNewsScrollTop
+						})
+					}, 50)
 				}
 				this.curretSwiperIndex = index
 			},
@@ -217,7 +237,7 @@
 			// 获取动态信息
 			async getFeeds() {
 				let feeds = await this.$u.api.getFeeds()
-				this.feedsList = feeds.feeds.map((item) => {
+				let feedsList = feeds.feeds.map((item) => {
 					return {
 						...item,
 						cover: this.BaseFileURL + item.images[0].file,
@@ -225,35 +245,43 @@
 						name: item.user.name
 					}
 				})
-				uni.$on('swiperHeightChange', height => {
+				this.feedsList = [...this.feedsList, ...feedsList]
+				uni.$once('swiperHeightChange', height => {
 					this.swiperSliderFeedsHeight = height
+					this.swiperSliderHeight = height
 				})
 			},
 			// 获取资讯信息 
 			async getNews() {
 				let news = await this.$u.api.getNews()
-				this.newsList = news.map((item) => {
+				let newsList = news.map((item) => {
 					return {
 						...item,
 						cover: this.BaseFileURL + item.image.id
 					}
 				})
+				this.newsList = [...this.newsList, ...newsList]
 				this.swiperSliderNewsHeight = (this.newsList.length * 95 + 100) + 'px'
+				this.swiperSliderHeight = this.swiperSliderNewsHeight
 			},
 			// 推荐，资讯点击切换方法
 			swiperChange(index) {
 				if (index === 0) {
 					this.swiperSliderHeight = this.swiperSliderFeedsHeight
-					uni.pageScrollTo({
-						duration:0,
-						scrollTop:this.oldFeedsScrollTop
-					})
+					setTimeout(() => {
+						uni.pageScrollTo({
+							duration:0,
+							scrollTop:this.oldFeedsScrollTop
+						})
+					}, 50)
 				} else {
-					uni.pageScrollTo({
-						duration:0,
-						scrollTop:this.oldNewsScrollTop
-					})
 					this.swiperSliderHeight = this.swiperSliderNewsHeight
+					setTimeout(() => {
+						uni.pageScrollTo({
+							duration:0,
+							scrollTop:this.oldNewsScrollTop
+						})
+					}, 50)
 				}
 				this.curretSwiperIndex = index
 			}
