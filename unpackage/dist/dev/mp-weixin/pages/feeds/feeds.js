@@ -157,6 +157,8 @@ var _default =
     this.getFeeds();
   },
   onPullDownRefresh: function onPullDownRefresh() {
+    this.feedsList = [];
+    this.showFeedsList = [];
     this.getFeeds();
   },
   onReachBottom: function onReachBottom() {
@@ -172,14 +174,13 @@ var _default =
 
                 });
                 _this.feedsList = [].concat(_toConsumableArray(_this.feedsList), _toConsumableArray(feeds));
-                _this.feedsList = feeds;
                 showArrayList = [];
                 _this.feedsList.map(function (item, index) {
                   if (index % 6 === 0 && !!_this.feedsList[index + 5]) {
                     showArrayList.push(_this.feedsList.slice(index, index + 6));
                   }
                 });
-                _this.showFeedsList = showArrayList;case 9:case "end":return _context.stop();}}}, _callee);}))();
+                _this.showFeedsList = showArrayList;case 8:case "end":return _context.stop();}}}, _callee);}))();
     } } };exports.default = _default;
 
 /***/ }),

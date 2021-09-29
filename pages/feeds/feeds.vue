@@ -3,7 +3,7 @@
 		<view class="one-feeds-box" v-for="(feedsList, i) in showFeedsList " :key="i">
 			<view class="one-feed" v-for="(item, k) in feedsList" :key="k"
 				:class="k % 6 === 0 ? (i % 2 === 0 ? 'feed-big-left' : 'feed-big-right') : ''">
-				<navigator>
+				<navigator :url=" `/subpages/feedInfo?id=${item.id}` ">
 					<image :src="item.cover" class="feed-content" mode="aspectFill" :lazy-load="true" />
 				</navigator>
 			</view>
@@ -25,6 +25,8 @@
 			this.getFeeds()
 		},
 		onPullDownRefresh() {
+			this.feedsList = []
+			this.showFeedsList = []
 			this.getFeeds()
 		},
 		onReachBottom() {
@@ -40,7 +42,6 @@
 					}
 				})
 				this.feedsList = [...this.feedsList, ...feeds]
-				this.feedsList = feeds
 				let showArrayList = []
 				this.feedsList.map((item,index) => {
 					if (index % 6 === 0 && !!this.feedsList[index + 5]){

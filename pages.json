@@ -21,7 +21,7 @@
 		}
 	    ,{
             "path" : "pages/webview/webview",
-            "style" :                                                                                    
+            "style" :
             {
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
@@ -29,6 +29,18 @@
             
         }
     ],
+	"subPackages": [{
+		"root":"subpages",
+		"pages":[{
+			"path":"feedInfo",
+			"style":{
+				"navigationBarTitleText":"动态详情",
+				"navigationBarBackgroundColor":"#FFFFFF",
+				"navigationBarTextStyle":"black",
+				"backgroundColor":"#FFFFFF"
+			}
+		}]
+	}],
 	"tabBar": {
 		"color": "#000",
 		"selectedColor": "#0050FF",
