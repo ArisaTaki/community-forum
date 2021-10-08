@@ -23,6 +23,7 @@
 	
 	import timeFrom from '@/tools/timeFrom.js'
 	import noPic from '@/static/nopic.png'
+	import comment from '@/components/comment/comment.vue'
 	export default {
 		data() {
 			return {
@@ -32,6 +33,9 @@
 				// 是否获取成功
 				getRequestOK: false
 			}
+		},
+		components: {
+			comment
 		},
 		async onLoad(params) {
 			// 获取动态详情

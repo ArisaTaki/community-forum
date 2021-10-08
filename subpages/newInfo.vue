@@ -52,19 +52,22 @@
 	import htmlParse from '@/components/html-parse/parse.vue'
 
 	import timeFrom from '@/tools/timeFrom.js'
+	
+	import comment from '@/components/comment/comment.vue'
 
 	export default {
 		data() {
 			return {
 				newInfo: {},
-				getRequestOK: true,
+				getRequestOK: false,
 				navBarShow: false
 			}
 		},
 
 		components: {
 			htmlParse,
-			picBlur
+			picBlur,
+			comment
 		},
 		
 		onPageScroll(event) {
@@ -97,6 +100,7 @@
 				content: cp,
 				views_count: res.hits
 			}
+			this.getRequestOK = true
 		},
 		
 		filters: {

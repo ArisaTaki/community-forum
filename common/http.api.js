@@ -10,7 +10,7 @@ const install = (Vue, vm) => {
 	api.getNews = params => vm.$u.get('/news', params)
 
 	// 获取指定 id 动态详情
-	api.getFeedInfo = params => vm.$u.get('/feeds/' + params.id)
+	api.getFeedInfo = params => vm.$u.get(`/feeds/${params.id}`)
 	
 	// 获取指定ID动态评论详情
 	api.getFeedComments = params => vm.$u.get('/feeds/' + params.id + '/comments')
