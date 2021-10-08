@@ -11155,7 +11155,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var install = function install(Vue, vm) {
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _regenerator = _interopRequireDefault(__webpack_require__(/*! ./node_modules/@babel/runtime/regenerator */ 20));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {try {var info = gen[key](arg);var value = info.value;} catch (error) {reject(error);return;}if (info.done) {resolve(value);} else {Promise.resolve(value).then(_next, _throw);}}function _asyncToGenerator(fn) {return function () {var self = this,args = arguments;return new Promise(function (resolve, reject) {var gen = fn.apply(self, args);function _next(value) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);}function _throw(err) {asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);}_next(undefined);});};}var install = function install(Vue, vm) {
   var api = {};
   // 获取广告轮播图数据信息
   api.getAdverts = function (params) {return vm.$u.get('/advertisingspace/advertising?space=1,2,3');};
@@ -11165,11 +11165,94 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
   // 获取资讯列表信息
   api.getNews = function (params) {return vm.$u.get('/news', params);};
+
+  // 获取指定ID动态评论详情
+  api.getFeedInfo = function (params) {return vm.$u.get("/feeds/".concat(params.id, "/comments"));};
+
+  // 删除指定ID的动态
+  api.deleteFeed = function (params) {return vm.$u.delete("/feeds/".concat(params.id, "/currency"));};
+
+  // 点赞动态
+  api.likeThisFeed = function (params) {return vm.$u.post("/feeds/".concat(params.id, "/like"));};
+
+  // 取消点赞
+  api.cancelLikeThisFeed = function (params) {return vm.$u.delete("/feeds/".concat(params.id, "/unlike"));};
+
+  // 发布一条动态
+  api.postOneFeed = function (params) {return vm.$u.post("/feeds", params);};
+
+  // 评论一条动态
+  api.commentOneFeed = function (params) {return vm.$u.post("/feeds/".concat(params.id, "/comments"), {
+      body: params.body });};
+
+
+  // 获取指定ID咨询详情
+  api.getNewsInfo = function (params) {return vm.$u.get("news/".concat(params.id));};
+
+  // 获取指定 ID 资讯 评论详情
+  api.getNewComments = function (params) {return vm.$u.get("/news/".concat(params.id, "/comments"));};
+
+  // 点赞资讯
+  api.likeThisNew = function (params) {return vm.$u.post("/news/".concat(params.id, "/likes"));};
+
+  // 取消点赞资讯
+  api.unlikeThisNew = function (params) {return vm.$u.delete("/news/".concat(params.id, "/likes"));};
+
+  // 评论一条资讯
+  api.commentOneInfo = function (params) {return vm.$u.post("/news/".concat(params.id, "/comments"), {
+      body: params.body });};
+
+
+  // 用户相关API
+  // 查找用户信息
+  api.findUser = function (params) {return vm.$u.get("/user/".concat(params.name));};
+
+  // 获取注册验证码
+  api.getRegisterCode = function (params) {return vm.$u.post("/verifycodes/register", params);};
+
+  // 获取手机登录验证码
+  api.getLoginCode = function (params) {return vm.$u.post('/verifycodes', params);};
+
+  // 注册
+  api.userRegister = function (params) {return vm.$u.post('/users', params);};
+
+  // 登录
+  api.userLogin = function (params) {return vm.$u.post('/auth/login', params);};
+
+  // 退出
+  api.userLogout = function () {return vm.$u.post('auth/logout');};
+
+  // 获取当前登录用户相关的通知信息
+  api.getUserMsg = function () {return vm.$u.get('/user/counts');};
+
+  // 文件上传操作
+  api.uploadFile = /*#__PURE__*/function () {var _ref = _asyncToGenerator( /*#__PURE__*/_regenerator.default.mark(function _callee(file) {var rfile, ufile;return _regenerator.default.wrap(function _callee$(_context) {while (1) {switch (_context.prev = _context.next) {case 0:
+              rfile = file;
+
+
+
+
+              // 将文件写入后台系统
+              _context.next = 3;return uni.uploadFile({
+                url: vm.$u.http.config.baseUrl + 'files',
+                header: {
+                  Authoriztion: "Bearer".concat(uni.getStorageSync("token")) },
+
+                name: 'file',
+                file: rfile,
+                filePath: file.path });case 3:ufile = _context.sent;
+
+              console.log(JSON.parse(unfile[1].data));return _context.abrupt("return",
+              JSON.parse(ufile[1].data));case 6:case "end":return _context.stop();}}}, _callee);}));return function (_x) {return _ref.apply(this, arguments);};}();
+
+
+  // 将各个定义的接口名称，统一放进对象挂载到vm.$u.api(因为vm就是this，也即this.$u.api)下
   vm.$u.api = api;
 };var _default =
 
 {
   install: install };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 /* 43 */,
