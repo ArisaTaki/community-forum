@@ -20,6 +20,43 @@
 	</view>
 </template>
 <script>
+	
+	import timeFrom from '@/tools/timeFrom.js'
+	import noPic from '@/static/nopic.png'
+	export default {
+		data() {
+			return {
+				// 动态详情
+				feedInfo: {},
+				
+				// 是否获取成功
+				getRequestOK: false
+			}
+		},
+		async onLoad(params) {
+			// 获取动态详情
+			let res = await this.$u.api.getFeedInfo(params)
+			let images = res.images.map(one => {
+				return this.BaseFileURL + one.file
+			})
+			this.feedInfo = {
+				...res,
+				name: res.user.name,
+				avatar: res.user.avatar ? res.user.avatar.url : noPic,
+				images,
+			}
+			this.getRequestOK = true
+		},
+		
+		filters: {
+			timeFormate(timeDate) {
+				let Time = new Date(timeDate);
+				let timestemp = Time.getTime()
+				let t = timeFrom(timestemp, "yyyy年mm月dd日")
+				return t
+			}
+		}
+	}
 </script>
 
 <style lang="scss" scoped>

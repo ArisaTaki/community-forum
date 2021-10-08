@@ -39,6 +39,11 @@
 				"navigationBarTextStyle":"black",
 				"backgroundColor":"#FFFFFF"
 			}
+		}, {
+			"path":"newInfo",
+			"style":{
+				"navigationStyle": "custom"
+			}
 		}]
 	}],
 	"tabBar": {

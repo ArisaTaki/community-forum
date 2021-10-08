@@ -9,7 +9,8 @@
     {
       "root": "subpages",
       "pages": [
-        "feedInfo"
+        "feedInfo",
+        "newInfo"
       ]
     }
   ],

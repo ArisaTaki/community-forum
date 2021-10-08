@@ -9,8 +9,11 @@ const install = (Vue, vm) => {
 	// 获取资讯列表信息
 	api.getNews = params => vm.$u.get('/news', params)
 
+	// 获取指定 id 动态详情
+	api.getFeedInfo = params => vm.$u.get('/feeds/' + params.id)
+	
 	// 获取指定ID动态评论详情
-	api.getFeedInfo = params => vm.$u.get(`/feeds/${params.id}/comments`)
+	api.getFeedComments = params => vm.$u.get('/feeds/' + params.id + '/comments')
 
 	// 删除指定ID的动态
 	api.deleteFeed = params => vm.$u.delete(`/feeds/${params.id}/currency`)

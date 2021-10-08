@@ -108,7 +108,7 @@
 			</swiper-item>
 			<swiper-item class="swiper-item sns-news">
 				<view v-for="(item, index) in newsList" :key="index">
-					<navigator :url="`/subpages/newInfo/newinfo?id=${item.id}`" open-type="navigate" class="one-new">
+					<navigator :url="`/subpages/newInfo?id=${item.id}`" open-type="navigate" class="one-new">
 						<view class="left">
 							<view class="title u-line-2">
 								{{item.title}}
