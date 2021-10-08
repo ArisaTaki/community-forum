@@ -55,7 +55,7 @@
 					<sns-waterfall v-model="feedsList" ref="waterfall">
 						<template v-slot:left="{leftList}">
 							<view class="feed-one" v-for="(item, index) in leftList" :key="index">
-								<navigator open-type="navigate">
+								<navigator open-type="navigate" :url=" `/subpages/feedInfo?id=${item.id}` ">
 									<image :src="item.cover" mode="widthFix" :lazy-load="true" class="feed-img" />
 									<view class="u-line-2 feed-title" v-if="!!item.feed_content">
 										{{item.feed_content}}
@@ -80,7 +80,7 @@
 						</template>
 						<template v-slot:right="{rightList}">
 							<view class="feed-one" v-for="(item, index) in rightList" :key="index">
-								<navigator open-type="navigate">
+								<navigator open-type="navigate" :url=" `/subpages/feedInfo?id=${item.id}` ">
 									<image :src="item.cover" mode="widthFix" :lazy-load="true" class="feed-img" />
 									<view class="u-line-2 feed-title" v-if="!!item.feed_content">
 										{{item.feed_content}}
@@ -108,7 +108,7 @@
 			</swiper-item>
 			<swiper-item class="swiper-item sns-news">
 				<view v-for="(item, index) in newsList" :key="index">
-					<navigator :url="`/subpages/newinfo/newinfo?id=${item.id}`" open-type="navigate" class="one-new">
+					<navigator :url="`/subpages/newInfo/newinfo?id=${item.id}`" open-type="navigate" class="one-new">
 						<view class="left">
 							<view class="title u-line-2">
 								{{item.title}}

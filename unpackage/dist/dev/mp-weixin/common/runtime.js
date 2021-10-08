@@ -105,11 +105,11 @@
 /******/
 /******/
 /******/ 		// mini-css-extract-plugin CSS loading
-/******/ 		var cssChunks = {"components/uni-nav-bar/index":1,"components/sns-waterfall/sns-waterfall":1};
+/******/ 		var cssChunks = {"components/uni-nav-bar/index":1,"components/sns-waterfall/sns-waterfall":1,"node-modules/uview-ui/components/u-avatar/u-avatar":1,"node-modules/uview-ui/components/u-icon/u-icon":1};
 /******/ 		if(installedCssChunks[chunkId]) promises.push(installedCssChunks[chunkId]);
 /******/ 		else if(installedCssChunks[chunkId] !== 0 && cssChunks[chunkId]) {
 /******/ 			promises.push(installedCssChunks[chunkId] = new Promise(function(resolve, reject) {
-/******/ 				var href = "" + ({"components/uni-nav-bar/index":"components/uni-nav-bar/index","components/sns-waterfall/sns-waterfall":"components/sns-waterfall/sns-waterfall"}[chunkId]||chunkId) + ".wxss";
+/******/ 				var href = "" + ({"components/uni-nav-bar/index":"components/uni-nav-bar/index","components/sns-waterfall/sns-waterfall":"components/sns-waterfall/sns-waterfall","node-modules/uview-ui/components/u-avatar/u-avatar":"node-modules/uview-ui/components/u-avatar/u-avatar","node-modules/uview-ui/components/u-icon/u-icon":"node-modules/uview-ui/components/u-icon/u-icon"}[chunkId]||chunkId) + ".wxss";
 /******/ 				var fullhref = __webpack_require__.p + href;
 /******/ 				var existingLinkTags = document.getElementsByTagName("link");
 /******/ 				for(var i = 0; i < existingLinkTags.length; i++) {
