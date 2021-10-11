@@ -90,7 +90,7 @@
 		mapState
 	} from 'vuex'
 	export default {
-		props:{
+		props: {
 			oneInfo: Object,
 			type: String
 		},
@@ -100,7 +100,11 @@
 				commintsList: [],
 				// props 传递的数据无法改变触发DOM更新
 				oneInfoClone: [],
-				showCommentBox: false
+				showCommentBox: false,
+				// 评论输入的内容
+				cInput: '',
+				// 是否可以发送评论
+				disableSendCommentTag: true
 			}
 		},
 		created() {
@@ -109,7 +113,7 @@
 		},
 		methods: {
 			async getCommentList() {
-				if(this.type === 'feed') {
+				if (this.type === 'feed') {
 					let res = await this.$u.api.getFeedComments({
 						id: this.oneInfo.id
 					});
@@ -129,16 +133,46 @@
 			},
 			// 跳转到评论列表的锚点位置
 			gotoComment() {
-				setTimeout(() => {
-					const query = uni.createSelectorQuery().in(this)
-					query.select('#gohere').boundingClientRect(data => {
-						console.log(data)
-						uni.pageScrollTo({
-							duration:500,
-							scrollTop:data.bottom
+				// uni.createSelectorQuery().in(this).select('#gohere').boundingClientRect(data => {
+				// 	console.log(data)
+				// 	uni.pageScrollTo({
+				// 		duration: 0,
+				// 		scrollTop: data.top
+				// 	})
+				// }).exec()
+				
+				// 上述代码有BUG，使用下面的更改代码进行优化，有待商榷空间
+				const query = wx.createSelectorQuery().in(this)
+				query.select('#gohere').boundingClientRect()
+				query.selectViewport().scrollOffset()
+				query.exec((res) => {
+					console.log(res)
+					if (res[0] && res[1]) {
+						wx.pageScrollTo({
+							scrollTop: res[0].top + res[1].scrollHeight,
+							duration: 500
 						})
-					}).exec()
-				}, 0)
+					}
+				})
+			},
+			// 获取输入的内容
+			getInput(e) {
+				this.cInput = e.detail.value
+				if (!this.cInput) {
+					this.disableSendCommentTag = true
+				} else {
+					this.disableSendCommentTag = false
+				}
+			}
+			
+		},
+		
+		filters: {
+			timeFormate (timeDate) {
+				let time = new Date(timeDate)
+				let timestemp = time.getTime()
+				let t = timeFrom(timestemp, 'yyyy年mm月dd日')
+				return t
 			}
 		}
 	}
