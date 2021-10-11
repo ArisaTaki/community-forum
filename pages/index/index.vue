@@ -129,6 +129,8 @@
 				</view>
 			</swiper-item>
 		</swiper>
+		
+		<login ref="login" />
 	</view>
 </template>
 

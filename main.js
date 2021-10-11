@@ -12,6 +12,10 @@ Vue.prototype.BaseFileURL = 'http://ts.lagou.uieee.com/api/v2/files/'
 import uniNavBar from '@/components/uni-nav-bar/index.vue'
 Vue.component('uni-nav-bar', uniNavBar)
 
+// 引入公用组件login
+import login from '@/components/login/login.vue'
+Vue.component("login", login)
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 

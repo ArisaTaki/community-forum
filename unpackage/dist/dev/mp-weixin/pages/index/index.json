@@ -2,6 +2,7 @@
   "navigationStyle": "custom",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "sns-waterfall": "/components/sns-waterfall/sns-waterfall"
+    "sns-waterfall": "/components/sns-waterfall/sns-waterfall",
+    "login": "/components/login/login"
   }
 }

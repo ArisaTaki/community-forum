@@ -50,6 +50,7 @@
     }
   },
   "usingComponents": {
-    "uni-nav-bar": "/components/uni-nav-bar/index"
+    "uni-nav-bar": "/components/uni-nav-bar/index",
+    "login": "/components/login/login"
   }
 }
